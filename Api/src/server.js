@@ -1,5 +1,7 @@
 import express from 'express';
 import {db} from './config/db.js';
+import { QueryTypes } from 'sequelize';
+import { Sequelize } from 'sequelize';
 
 import { Person } from './models/person.js';
 import { Transacao } from './models/transacao.js';
@@ -79,26 +81,31 @@ app.post('/cadastroTransacao', (req, res) => {
 }
 */
 
-/*app.get('/consultaPessoa', (req, res) => {
-    const ConsultasPessoa = [];
-    transacao.forEach((i) => {
+app.get('/consultaPessoa/', async (req, res) => {
+    const Consultas_totais_pessoas = await Transacao.sequelize.query(
+        `SELECT 
+            p.nome, 
+            COALESCE(SUM(CASE WHEN t.tipo = 'receita' THEN t.valor ELSE 0 END), 0) AS total_receitas,
+            COALESCE(SUM(CASE WHEN t.tipo = 'despesa' THEN t.valor ELSE 0 END), 0) AS total_despesas,
+            COALESCE(SUM(CASE WHEN t.tipo = 'receita' THEN t.valor ELSE 0 END), 0) - COALESCE(SUM(CASE WHEN t.tipo = 'despesa' THEN t.valor ELSE 0 END), 0) AS saldo_total
+        FROM Pessoas p
+        LEFT JOIN Transacaos t ON p.id = t.id_pessoa
+        GROUP BY p.id, p.nome;`,
+        { type: QueryTypes.SELECT }
+    );
+    const Consultas_totais = await Transacao.sequelize.query(
+        `SELECT 
+            COALESCE(SUM(CASE WHEN t.tipo = 'receita' THEN t.valor ELSE 0 END), 0) AS total_receitas,
+            COALESCE(SUM(CASE WHEN t.tipo = 'despesa' THEN t.valor ELSE 0 END), 0) AS total_despesas,
+            COALESCE(SUM(CASE WHEN t.tipo = 'receita' THEN t.valor ELSE 0 END), 0) - 
+            COALESCE(SUM(CASE WHEN t.tipo = 'despesa' THEN t.valor ELSE 0 END), 0) AS saldo_liquido
+            FROM Transacaos t;`,
+        { type: QueryTypes.SELECT }
+    );
 
-        const {Descricao, valor, tipo, id_pessoa, id_transacao} = i;
-
-        ConsultasPessoa[id_pessoa].nome = pessoas.find((p) => p.id == id_pessoa);
-        
-        if (tipo == 'receita') {
-            ConsultasPessoa[id_pessoa].totalReceitas += valor;
-        } else {
-            ConsultasPessoa[id_pessoa].totalDespesas += valor;
-        }
-
-        ConsultasPessoa[id_pessoa].saldo = ConsultasPessoa[id_pessoa].totalReceitas - ConsultasPessoa[id_pessoa].totalDespesas;
-    });
-
-    res.json(ConsultasPessoa);
-
-
-});*/
+    
+    res.send({Consultas_totais_pessoas, Consultas_totais});
+    
+});
 
 export { app };

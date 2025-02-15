@@ -1,4 +1,5 @@
 import { Sequelize } from "sequelize";
+import {Person} from "./person.js";
 import {db} from "../config/db.js";
 
 const Transacao = db.define('Transacao', {
@@ -20,11 +21,13 @@ const Transacao = db.define('Transacao', {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    id_pessoa: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-    },
 
 });
+
+Transacao.belongsTo(Person, {
+    constraints: true,
+    foreignKey: 'id_pessoa'
+});
+
 
 export {Transacao};	
