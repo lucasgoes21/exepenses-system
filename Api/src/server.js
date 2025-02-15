@@ -1,70 +1,71 @@
 import express from 'express';
+import {db} from './config/db.js';
+
+import { Person } from './models/person.js';
+import { Transacao } from './models/transacao.js';
+
+await db.sync();
 
 const app = express();
 app.use(express.json());
 
+
+
+
+
+
 //Cadastro de pessoas//
-
-const pessoas = [];
-
-
-
 
 app.post('/cadastroPessoa', (req, res) => {
 
-    if(pessoas.length != 0) {
-        const {nome, idade, id} = pessoas[pessoas.length - 1];
-        const id_pessoa = id + 1;
-        req.body.id = id_pessoa;
-        pessoas.push(req.body);
+    const newPerson = Person.create(req.body);
 
-        res.send('Pessoa cadastrada com sucesso!');
-    }
-
-    req.body.id = 0;
-    pessoas.push(req.body);
     res.send('Pessoa cadastrada com sucesso!');
+
 })
 
-app.put('/cadastroPessoa/:id', (req, res) => {
-
-    const id = req.params.id;
-    const { nome, idade } = req.body;
-
-    pessoas[id] = { nome, idade, id };
+app.put('/cadastroPessoa/:Id', (req, res) => {
+     
+    const newPerson = Person.update(req.body, {
+        where: {
+            id: req.params.Id
+        }
+    });
 
     res.send('Pessoa atualizada com sucesso!');
+
 });
 
-app.delete('/cadastroPessoa/:id', (req, res) => {
+app.delete('/cadastroPessoa/:Id', (req, res) => {
 
-    const id = req.params.id;
-    pessoas.splice(id);
+    const newPerson = Person.destroy({
+        where: {
+            id: req.params.Id
+        }
+    });
+
+    const newtransacao = Transacao.destroy({
+        where: {
+            id_pessoa: req.params.Id
+        }
+    });
+
     res.send('Pessoa deletada com sucesso!');
 
 });
 
-app.get('/cadastroPessoa', (req, res) => {
-  res.json(pessoas);
-});
 
 //Cadastro de transações// 
 
-const transacao = [];
-const id_transacao = 0;
 
 app.post('/cadastroTransacao', (req, res) => {
     
-    req.body.id = id_transacao;
-    transacao.push(req.body);
-    id_transacao = id_transacao + 1;
+    const newTransacao = Transacao.create(req.body);
 
     res.send('Transação cadastrada com sucesso!');
+
 });
 
-app.get('/cadastroTransacao', (req, res) => {
-    res.json(transacao);
-})
 
 //Consultas de totais (Pessoas)//
 
@@ -78,7 +79,7 @@ app.get('/cadastroTransacao', (req, res) => {
 }
 */
 
-app.get('/consultaPessoa', (req, res) => {
+/*app.get('/consultaPessoa', (req, res) => {
     const ConsultasPessoa = [];
     transacao.forEach((i) => {
 
@@ -98,6 +99,6 @@ app.get('/consultaPessoa', (req, res) => {
     res.json(ConsultasPessoa);
 
 
-});
+});*/
 
-app.listen(3000);
+export { app };
