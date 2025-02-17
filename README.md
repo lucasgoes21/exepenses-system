@@ -40,3 +40,22 @@ O cadastro de transação deverá conter:
 
 5. Pessoa (inteiro identificador da pessoa do cadastro anterior);   
     1.Esse valor precisa existir no cadastro de pessoa;
+
+### Consulta de totais: 
+Deverá listar todas as pessoas cadastradas, exibindo o total de receitas, despesas e o saldo (receita – despesa) de cada uma.
+
+Ao final da listagem anterior, deverá exibir o total geral de todas as pessoas incluindo o total de receitas, total de despesas e o saldo líquido.
+
+## Execução
+
+Dentro de ./exepenses-system:
+~~~ 
+Cd api
+npm start
+
+cd ../frontend
+npm run dev
+~~~
+
+Ou execute "start.bat"
+
