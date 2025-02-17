@@ -53,6 +53,7 @@ function Home() {
       Nome: inputNome.current.value,
       Idade: inputIdade.current.value,
     });
+    getTransacao();
     getPessoas();
   }
 
@@ -84,17 +85,30 @@ function Home() {
       tipo: auxTipo,
       id_pessoa: inputId.current.value,
     });
+    menor();
     setexist(false);
+    getTransacao();
     getPessoas();
+  }
+  const [listaTransacao, setListaTransacao] = useState([]);
+
+/*Listagem de transaçoes, segue o mesmo conseito do listagem de pessoas*/
+  async function getTransacao() {
+    const dataFromApi = await api.get("/cadastroTransacao");
+    setListaTransacao(dataFromApi.data);
+    console.log(dataFromApi.data);
   }
 
   // Variáveis de estado para armazenar as pessoas e transações
   const [pessoas, setPessoas] = useState([]);
   const [transacao, setTransacao] = useState([]);
 
+  
+
   // Função para deletar uma pessoa
   async function delPessoa(id) {
     await api.delete(`/cadastroPessoa/${id}`);
+    getTransacao();
     getPessoas();
   }
 
@@ -103,11 +117,12 @@ function Home() {
     const dataFromApi = await api.get("/consultaPessoa");
     setTransacao(dataFromApi.data.Consultas_totais);
     setPessoas(dataFromApi.data.Consultas_totais_pessoas);
-    console.log(dataFromApi.data.Consultas_totais);
+
   }
 
   // Função que é chamada quando a página é carregada
   useEffect(() => {
+    getTransacao();
     getPessoas();
   }, []);
 
@@ -153,6 +168,7 @@ function Home() {
       Idade: inputEditIdade.current.value,
     });
     getPessoas();
+    getTransacao();
     setMostrarDiv(false);
   }
 
@@ -299,6 +315,23 @@ function Home() {
               </div>
             )}
           </div>
+          <div className="ListaPessoa">
+            <h1 >Lista De transações</h1>
+
+            {/*Listagem de transaçoes, segue o mesmo conseito do listagem de pessoas*/}
+
+          {listaTransacao.map((ListTrans) => (
+            <div className="listaPessoas">
+              <div key={ListTrans.id}>
+                <p>Id: <span>{ListTrans.id}</span></p>
+                <p>Nome: <span>{ListTrans.Pessoa.nome}</span></p>
+                <p>Valor: <span>R$ {ListTrans.valor}</span></p>
+                <p>Tipo: <span>{ListTrans.tipo}</span></p>
+                <p>Descricao: <span>{ListTrans.Descricao}</span></p>
+              </div>
+            </div>
+          ))}
+            </div>
         </div>
         <div className="column">
           {/*Componente da lista de pessoas*/}

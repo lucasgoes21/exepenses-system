@@ -36,6 +36,16 @@ app.get('/cadastroPessoa/:Id', async (req, res) => {
      res.send(newPerson);
 });
 
+app.get('/cadastroTransacao/', async (req, res) => {
+    const newTransacao = await Transacao.findAll({
+        include: [{
+            model: Person,
+            attributes: ['nome']
+        }]
+    });
+    res.send(newTransacao);
+});
+
 app.put('/cadastroPessoa/:Id', async (req, res) => {
      
     // atualiza uma pessoa com os dados recebidos na requisição
