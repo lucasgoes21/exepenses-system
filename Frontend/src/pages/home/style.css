@@ -1,42 +1,228 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* Estilos para a classe home */
+.home {
+  & table {
+    width: 110%;
+  }
+  & td {
+    text-align: left;
+    vertical-align: top;
+  }
+  & h2 {
+    text-align: center;
+    font-size: 42px;
+    border-bottom: 2px ridge #BFA181;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    color: #BFA181;
+    font-family: "Montserrat", serif;
+    font-weight: normal;
+  }
+}
+
+/* Estilos para a classe cadPessoa */
+.cadPessoa {
+  padding-top: 10px;
+  padding-left: 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos para o elemento h1 */
+h1 {
   text-align: center;
+  font-size: 32px;
+  border-bottom: 2px ridge #BFA181;
+  padding-bottom: 10px;
+  color: #BFA181;
+  font-family: "Montserrat", serif;
+  font-weight: normal;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+/* Estilos para o elemento form */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+  border-radius: 5px;
+  max-width: 100%;
+  width: 400px;
+  margin-bottom: 20px;
+  align-items: center;
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+  /* Estilos para os elementos input e textarea dentro de form */
+  & input,
+  textarea {
+    border: 2px ridge #BFA181;
+    border-radius: 1px;
+    width: 350px;
+    height: 40px;
+    background-color: rgb(26, 49, 77, 0.5);
+    color: #c0c0c0;
+    font-size: 16px;
+    padding-left: 10px;
+    outline: #BFA181;
   }
-  to {
-    transform: rotate(360deg);
+
+  /* Estilos para o elemento h1 dentro de form */
+  & h1 {
+    width: 400px;
+  }
+
+  /* Estilos para o elemento textarea dentro de form */
+  & textarea {
+    border-radius: 1px;
+    height: 80px;
+    resize: none;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* Estilos para os elementos button */
+& button {
+  border-radius: 1px;
+  background-color: rgb(26, 49, 77, 0.2);
+  border-color: #BFA181;
+  border-style: ridge;
+  width: 350px;
+  height: 40px;
+  font-weight: normal;
+  cursor: pointer;
+  color: #BFA181;
+  font-size: 18px;
+}
+
+/* Estilos para o estado hover dos elementos button */
+& button:hover {
+  opacity: 0.5;
+}
+
+/* Estilos para a classe listaPessoas */
+.listaPessoas {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 2px ridge #BFA181;
+  padding-bottom: 10px;
+  margin: 10px;
+  padding: 10px;
+  width: 400px;
+  border-radius: 1px;
+
+  /* Estilos para o elemento p dentro de listaPessoas */
+  & p {
+    color: #c0c0c0;
+    font-weight: normal;
+  }
+
+  /* Estilos para o elemento h1 dentro de listaPessoas */
+  & h1 {
+    padding-top: 100px;
+  }
+
+  /* Estilos para o elemento span dentro de listaPessoas */
+  & span {
+    border-bottom: 2px ridge #178582;
+    font-weight: normal;
+    font-style: italic;
+    color: #c0c0c0;
+  }
+
+  /* Estilos para os elementos button dentro de listaPessoas */
+  & button {
+    width: 29px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* Estilos para o estado hover dos elementos button dentro de listaPessoas */
+  & button:hover {
+    opacity: 0.5;
+  }
+
+  /* Estilos para a classe icons dentro de listaPessoas */
+  .icons {
+    display: flex;
+    height: 20px;
+    flex-direction: row;
+    gap: 10px;
   }
 }
 
-.card {
-  padding: 2em;
+/* Estilos para a classe totalTrasacao */
+.totalTrasacao {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 10px;
+  padding: 5px;
+  padding-top: 28px;
+  width: 400px;
+  border-radius: 10px;
+
+  /* Estilos para o elemento span dentro de totalTrasacao */
+  & span {
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  /* Estilos para o elemento p dentro de totalTrasacao */
+  & p {
+    color: #c0c0c0;
+    font-weight: normal;
+  }
 }
 
-.read-the-docs {
-  color: #888;
+/* Estilos para a classe column */
+.column {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  width: 33%;
+  padding: 50px;
+  padding-top: 10px;
 }
+
+/* Estilos para a classe row */
+.row::after {
+  display: table;
+  clear: both;
+}
+
+/* Estilos responsivos para telas de no máximo 600px de largura */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+
+/* Estilos para a classe radiobutton */
+.radiobutton {
+  display: flex;
+  flex-direction: row;
+  padding-right: 5px;
+  gap: 14px;
+  max-width: 50%;
+
+  /* Estilos para o elemento label dentro de radiobutton */
+  & label {
+    color: #c0c0c0;
+    font-weight: bold;
+  }
+}
+
+/* Estilos para a classe radio */
+.radio {
+  height: 20px;
+}
+
+/* Estilos para a classe cadTransacao */
+.cadTransacao {
+  padding-left: 10px;
+}
+
+/* Estilos para a classe listaPessoah1 */
+.listaPessoah1 {
+  padding-top: 35px;
+}
+
